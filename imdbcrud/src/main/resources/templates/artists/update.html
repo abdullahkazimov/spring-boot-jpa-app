@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Artist</title>
+</head>
+<body>
+    <div>
+        <h1>Update Artist Data</h1>
+        <form action="#" method="POST" th:action="@{/artists/updateNew}" th:object="${artist}">
+            <input type="hidden" th:field="*{id}"/> <br/>
+            <input type="text" th:field="*{firstName}" placeholder="First Name"/> <br/> <br/>
+            <input type="text" th:field="*{lastName}" placeholder="Last Name"/> <br/> <br/>
+            <input type="text" th:field="*{information}" placeholder="About"/> <br/> <br/>
+            <input type="submit" value="Update Artist"/>
+        </form>
+    </div>
+</body>
+</html>

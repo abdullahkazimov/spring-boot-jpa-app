@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Artists</title>
+  <style>
+    h1 {
+      text-align: center;
+    }
+    ul {
+      display: flex;
+      flex-direction: row;
+      list-style-type: none;
+      justify-content: center;
+    }
+
+    ul > li {
+      padding: 0.5%;
+    }
+
+    ul > li > a {
+      color: black;
+      font-size: 20px;
+      text-decoration: none;
+    }
+
+    ul > li > a:hover {
+      color: blue;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+    <div>
+      <h1>Filtered List of Artists</h1>
+      <ul>
+        <li>
+          <a th:href="@{'/home'}">Homepage</a>
+        </li>
+        <li>
+          <a th:href="@{/artists/sorted}">Sort</a>
+        </li>
+        <li>
+          <a th:href="@{/artists/list}">Original List</a>
+        </li>
+        <li>
+          <a th:href="@{/artists/new}">Add New Artist</a>
+        </li>
+      </ul>
+      <form th:method="post" th:action="@{/artists/filter}">
+        <ul>
+          <li>
+            <label>First Name</label>
+            <input type="checkbox" id="firstName" value="firstName" name="firstName" /> <br/>
+          </li>
+          <li>
+            <label>Last Name</label>
+            <input type="checkbox" id="lastName" value="lastName" name="lastName" /> <br/>
+          </li>
+          <li>
+            <label>Description</label>
+            <input type="checkbox" id="information" value="information" name="information" /> <br/>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <input type="submit" value="Filter"/>
+          </li>
+        </ul>
+      </form>
+    </div>
+    <ul>
+      <li>
+        <table border="1px">
+          <tr>
+            <th>
+              Name
+            </th>
+            <th>
+              About
+            </th>
+            <th>
+              Actions
+            </th>
+          </tr>
+          <tr th:each="artist : ${artists}">
+            <td th:text="${artist.getFullName()}">Name</td>
+            <td th:text="${artist.getInformation()}">About</td>
+            <td>
+              <th:block th:with="id=${artist.getId()}">
+                <a th:href="@{'/artists/update/' + ${id}}">Update</a>
+                <a th:href="@{'/artists/delete/' + ${id}}">Delete</a>
+                <a th:href="@{'/artists/' + ${id} + '/filmography'}">Filmography</a>
+              </th:block>
+            </td>
+          </tr>
+        </table>
+      </li>
+    </ul>
+</body>
+</html>

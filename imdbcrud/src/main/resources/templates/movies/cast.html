@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cast</title>
+    <style>
+        h1, h3 {
+            text-align: center;
+        }
+        ol {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            list-style-type: none;
+        }
+        ul {
+            display: flex;
+            flex-direction: row;
+            list-style-type: none;
+            justify-content: center;
+        }
+
+        ul > li {
+            padding: 1.5%;
+        }
+
+        ul > li > a {
+            color: black;
+            font-size: 20px;
+            text-decoration: none;
+        }
+
+        ul > li > a:hover {
+            color: blue;
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        function goBack() {
+            history.go(-1);
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <th:block>
+            <h1 th:text="'Cast of ' + ${movie.getTitle()}"> </h1>
+        </th:block>
+        <ul>
+            <li>
+
+                <table border="1px">
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            About
+                        </th>
+                    </tr>
+                    <tr th:each="artist : ${cast}">
+                        <td th:text="${artist.getFullName()}">Name</td>
+                        <td th:text="${artist.getInformation()}">About</td>
+                    </tr>
+                </table>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <button onclick="goBack()">Previous Page</button>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

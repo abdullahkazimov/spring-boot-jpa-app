@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Filmography</title>
+    <style>
+        h1, h3 {
+            text-align: center;
+        }
+        ol {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            list-style-type: none;
+        }
+        ul {
+            display: flex;
+            flex-direction: row;
+            list-style-type: none;
+            justify-content: center;
+        }
+
+        ul > li {
+            padding: 1.5%;
+        }
+
+        ul > li > a {
+            color: black;
+            font-size: 20px;
+            text-decoration: none;
+        }
+
+        ul > li > a:hover {
+            color: blue;
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        function goBack() {
+            history.go(-1);
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <ul>
+            <li>
+                <h1 th:text="'Movies of ' + ${artist.getFullName()}"> </h1>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <table border="1px">
+                    <tr>
+                        <th>
+                            Title
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                    </tr>
+                    <tr th:each="movie : ${filmography}">
+                        <td th:text="${movie.getTitle()}">Name</td>
+                        <td th:text="${movie.getDescription()}">About</td>
+                    </tr>
+                </table>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <button onclick="goBack()">Previous Page</button>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

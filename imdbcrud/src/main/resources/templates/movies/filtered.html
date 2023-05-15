@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Movies</title>
+    <style>
+        h1, h3 {
+            text-align: center;
+        }
+        ol {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            list-style-type: none;
+        }
+        ul {
+            display: flex;
+            flex-direction: row;
+            list-style-type: none;
+            justify-content: center;
+        }
+
+        ul > li {
+            padding: 1.5%;
+        }
+
+        ul > li > a {
+            color: black;
+            font-size: 20px;
+            text-decoration: none;
+        }
+
+        ul > li > a:hover {
+            color: blue;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <h1>Filtered List of Movies</h1>
+    <ul>
+        <li>
+            <a th:href="@{'/home'}">Homepage</a>
+        </li>
+        <li>
+            <a th:href="@{/movies/sorted}">Sort</a>
+        </li>
+        <li>
+            <a th:href="@{/movies/list}">Original List</a>
+        </li>
+        <li>
+            <a th:href="@{/movies/new}">Add New Movie</a>
+        </li>
+    </ul>
+            <form th:method="post" th:action="@{/movies/filter}">
+                <ul>
+                    <li>
+                        <label>Title</label>
+                        <input type="checkbox" id="title" value="title" name="title" /> <br/>
+                    </li>
+                    <li>
+                        <label>Description</label>
+                        <input type="checkbox" id="description" value="description" name="description" /> <br/>
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <input type="submit" value="Filter"/>
+                    </li>
+                </ul>
+            </form>
+    <ul>
+        <li>
+
+            <table border="1px">
+                <tr>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+                <tr th:each="movie : ${movies}">
+                    <td th:text="${movie.getTitle()}">Name</td>
+                    <td th:text="${movie.getDescription()}">About</td>
+                    <td>
+                        <th:block th:with="id=${movie.getId()}">
+                            <a th:href="@{'/movies/update/' + ${id}}">Update</a>
+                            <a th:href="@{'/movies/delete/' + ${id}}">Delete</a>
+                            <a th:href="@{'/movies/' + ${id} + '/cast'}">Cast</a>
+                        </th:block>
+                    </td>
+                </tr>
+            </table>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

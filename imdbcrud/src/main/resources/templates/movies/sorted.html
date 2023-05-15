@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Movies</title>
+  <style>
+    h1, h3 {
+      text-align: center;
+    }
+    ol {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      list-style-type: none;
+    }
+    ul {
+      display: flex;
+      flex-direction: row;
+      list-style-type: none;
+      justify-content: center;
+    }
+
+    ul > li {
+      padding: 1.5%;
+    }
+
+    ul > li > a {
+      color: black;
+      font-size: 20px;
+      text-decoration: none;
+    }
+
+    ul > li > a:hover {
+      color: blue;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+<div>
+  <h1>Sorted List of Movies</h1>
+  <ul>
+    <li>
+      <a th:href="@{'/home'}">Homepage</a>
+    </li>
+    <li>
+      <a th:href="@{/movies/filtered}">Filter</a>
+    </li>
+    <li>
+      <a th:href="@{/movies/list}">Original List</a>
+    </li>
+    <li>
+      <a th:href="@{/movies/new}">Add New Movie</a>
+    </li>
+  </ul>
+  <ul>
+    <li>
+      <table border="1px">
+        <tr>
+          <th>
+            Title
+          </th>
+          <th>
+            Description
+          </th>
+          <th>
+            Actions
+          </th>
+        </tr>
+        <tr th:each="movie : ${movies}">
+          <td th:text="${movie.getTitle()}">Title</td>
+          <td th:text="${movie.getDescription()}">Description</td>
+          <td>
+            <th:block th:with="id=${movie.getId()}">
+              <a th:href="@{'/movies/update/' + ${id}}">Update</a>
+              <a th:href="@{'/movies/delete/' + ${id}}">Delete</a>
+              <a th:href="@{'/movies/' + ${id} + '/cast'}">Cast</a>
+            </th:block>
+          </td>
+        </tr>
+      </table>
+    </li>
+  </ul>
+  <ol>
+    <li>
+      <th:block>
+        <ul>
+          <li>
+            <span th:if="${currentPage} > 1">
+                <a th:href="@{'/movies/sorted/page/' + ${previousPage}}">Back</a>
+            </span>
+            <span th:unless="${currentPage} > 1">
+                <a href="#">Back</a>
+            </span>
+          </li>
+          <li>
+            <span th:if="${currentPage} < ${totalPages}">
+                <a th:href="@{'/movies/sorted/page/' + ${nextPage}}">Next</a>
+            </span>
+            <span th:unless="${currentPage} < ${totalPages}">
+                <a href="#">Next</a>
+            </span>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <h3 th:text="'Page ' + ${currentPage} + ' / ' + ${totalPages}"></h3>
+          </li>
+          <li>
+
+          </li>
+          <li>
+            <h3 th:text="'Displaying: ' + ${rangeA} + ' - ' + ${rangeB}"></h3>
+          </li>
+        </ul>
+      </th:block>
+    </li>
+  </ol>
+</div>
+</body>
+</html>
